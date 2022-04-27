@@ -125,6 +125,8 @@ function flipACoin(call) {
     return { 'call': call, 'flip': flip, 'result': verdict };
 }
 
+// -- ENDPOINTS --
+
 app.get('/app', (req, res, next) => {
     res.json({ "message" : "your API works! (200)"})
     res.status(200)
