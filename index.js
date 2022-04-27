@@ -10,6 +10,17 @@ const args = require('minimist')(process.argv.slice(2))
 
 const port = args['port'] || 5000
 
+if (args.log == 'false') {
+    console.log("NOTICE: not creating file access.log")
+} else {
+    const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
+    app.use(morgan('combined', { stream: accessLog }))
+}
+
+app.use(express.urlencoded({extended: true}))
+
+const db = require('./src/services/database')
+
 const server = app.listen(port, () => {
     console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
