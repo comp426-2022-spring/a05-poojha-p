@@ -21,6 +21,9 @@ app.use(express.urlencoded({extended: true}))
 
 const db = require('./src/services/database')
 
+//serve HTML files here!
+app.use(express.static('./public'))
+
 const server = app.listen(port, () => {
     console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
