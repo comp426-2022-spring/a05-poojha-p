@@ -8,8 +8,6 @@ const minimist = require('minimist')
 const app = express()
 const args = require('minimist')(process.argv.slice(2))
 
-const port = args['port'] || 5000
-
 if (args.log == 'false') {
     console.log("NOTICE: not creating file access.log")
 } else {
@@ -23,6 +21,8 @@ const db = require('./src/services/database')
 
 //serve HTML files here!
 app.use(express.static('./public'))
+
+const port = args.port || 5000
 
 const server = app.listen(port, () => {
     console.log('App listening on port %PORT%'.replace('%PORT%',port))
