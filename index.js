@@ -146,27 +146,33 @@ app.get('/app/flip/', (req, res) => {
     res.json(flipResult);
 });
 
-app.get('/app/flips/:number/', (req, res) => {
+app.get('/app/flips/coins/', (req, res), next => {
     res.status(200);
-    const flips = req.params.number || 1;
-    const values = coinFlips(flips);
+    const flips = req.body.number;
     const rawjson = {
-        "raw" : values,
-        "summary": countFlips(values)
+        "raw" : flips,
+        "summary": countFlips(flips)
     };
     res.json(rawjson)
 });
 
-app.get('/app/flip/call/heads/', (req, res) => {
+app.post('/app/flip/call/', (req, res, next) => {
+    const flip = flipACoin(req.body.guess)
+    res.status(200).json(flip)
+});
+
+app.post('/app/flips/:number', (req, res, next) => {
+    const flips = coinFlips(req.params.number);
+    const counts = countFlips(flips);
+    res.status(200).json({"raw": flips, "summary": counts});
+  });
+
+app.get('/app/flip/call/heads/', (req, res, next) => {
     res.status(200);
     res.json(flipACoin('heads'));
 });
 
-app.get('/app/flip/call/tails/', (req, res) => {
+app.get('/app/flip/call/tails/', (req, res, next) => {
     res.status(200);
     res.json(flipACoin('tails'));
-});
-
-app.use(function(req, res){
-    res.status(404).send('404 NOT FOUND')
 });
