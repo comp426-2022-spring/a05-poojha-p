@@ -23,27 +23,27 @@ server.js [options]
 `)
 // If --help or -h, echo help text to STDOUT and exit
 if (args.help || args.h) {
-    console.log(help)
-    process.exit(0)
+    console.log(help);
+    process.exit(0);
 }
 
-const port = args.port || 5000
+const port = args.port || 5000 || process.env.PORT
 
 const server = app.listen(port, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%',port))
+    console.log('App listening on port %PORT%'.replace('%PORT%',port));
 });
 
 //serve HTML files here!
-app.use(express.static('./public'))
+app.use(express.static('./public'));
 
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 //logging middleware
-app.use(require('./src/middleware/mymiddleware.js'))
+app.use(require('./src/middleware/mymiddleware.js'));
 
 if (args.log == 'false') {
-    console.log("NOTICE: not creating file access.log")
+    console.log("NOTICE: not creating file access.log");
 } else {
 
     //using morgan ot log fills
