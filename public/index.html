@@ -41,11 +41,12 @@
           <li>Guess Flip</li>
         </ul>
     </div>    
-    <div id="single" class="inactive">
-      <h1>Flip One Single</h1>
-      <button onclick="flipCoin()"> Flip One Coin </button>
+    <div id="single" class="hidden">
+      <h1>Flip One Single Coin</h1>
+      <button id="coin" onclick="flipCoin()"> Flip Coin </button>
       <p><b>Result:</b> <span id="result"></span></p>
-      <img src="./assets/img/coin.png" id="s_coin">
+      <!-- An image of a US quarter (North Carolina variant) -->
+      <img src="./assets/img/coin.png" id="singlecoin">
     </div>
     <div id="multi" class="hidden">
       <h1>Flip Multiple Coins</h1>

@@ -12,11 +12,11 @@ function focusDiv(divname) {
 // Flip one coin and show coin image to match result when button clicked
 
 function singleFlip(){
-    fetch('http/localhost:5000/app/flip/', {mode: 'cors'}).then(function(response){
+    fetch('http/localhost:5000/app/flip/').then(function(response){
         return response.json();
-    }).then(function(result){
-        console.log(result);
-        document.getElementById("singleResult").innerHTML = result.flip;
+    }).then(function(res){
+        console.log(res);
+        document.getElementById("result").innerHTML = result.flip;
         document.getElementById("singleResulimg").src = `./assets/img/${result.flip}.png`;  
     });
 }
