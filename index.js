@@ -33,10 +33,6 @@ app.use(express.static('./public'))
 
 const port = args.port || 5000
 
-const server = app.listen(port, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%',port))
-});
-
 const help = (`
 server.js [options]
 --port	Set the port number for the server to listen on. Must be an integer
@@ -188,6 +184,12 @@ if(args.debug === true) {
 
 app.use(function(req, res){
     res.status(404).send('404 NOT FOUND')
+});
+
+//-- SERVER STUFF --
+
+const server = app.listen(port, () => {
+    console.log('App listening on port %PORT%'.replace('%PORT%',port))
 });
 
 process.on('SIGINT', () => {
