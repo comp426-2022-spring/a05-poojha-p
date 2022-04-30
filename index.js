@@ -11,6 +11,15 @@ const args = require('minimist')(process.argv.slice(2))
 if (args.log == 'false') {
     console.log("NOTICE: not creating file access.log")
 } else {
+
+    //using morgan ot log fills
+    //look for .log file or create one if it doesn't exist
+    const logdir = './log/';
+
+    if (!fs.existsSync(logdir)) {
+        fs.mkdirSync(logdir);
+    }
+
     const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
     app.use(morgan('combined', { stream: accessLog }))
 }
