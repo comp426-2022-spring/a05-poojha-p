@@ -17,11 +17,35 @@ function singleFlip(){
     }).then(function(res){
         console.log(res);
         document.getElementById("result").innerHTML = result.flip;
-        document.getElementById("singleResulimg").src = `./assets/img/${result.flip}.png`;  
+        document.getElementById("singlecoin").src = `./assets/img/${result.flip}.png`;  
     });
 }
 
 // Flip multiple coins and show coin images in table as well as summary results
+
+function flipMultipleCoins() {
+    numcoins = document.getElementById("multipleCoinFlipSubmit").value;
+
+    fetch('http://localhost:5000/app/flips/coins/', {
+        body: JSON.stringify({
+            "number": numcoins
+        }),
+        headers: {
+            "Content-Type": "application/json",
+        },
+        method: "post"
+    })
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (res) {
+            console.log(res);
+
+            document.getElementById("summaryHeads").innerHTML = result.summary.heads;
+            document.getElementById("summaryTails").innerHTML = result.summary.tails;
+        })
+}
+
 // Enter number and press button to activate coin flip series
 
 // Guess a flip by clicking either heads or tails button

@@ -50,10 +50,13 @@
     </div>
     <div id="multi" class="hidden">
       <h1>Flip Multiple Coins</h1>
-      <form id = "numflipsform">
-        <input type="number" id="number" placeholder="Enter Amount of Flips" name="number" min="0">
-        <input type="submit" value="Flip">
+      <form id = "numflipsform" action="javascript:void(0);" method="post" onsubmit="flipMultipleCoins()">
+        <label for="multipleCoinFlipSubmit">Enter the number of coins to flip: </label>
+        <input type="number" id="multipleCoinFlipSubmit" placeholder="Enter Amount of Flips" name="multipleCoinFlipSubmit" min="0">
+        <br>
+        <input type="submit" value="Flip!">
       </form>
+
       <p><b>Summary:</b></p>
       <p id="heads-result"></p>
       <p id="tails-result"></p>
