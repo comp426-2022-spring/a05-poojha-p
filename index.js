@@ -130,7 +130,7 @@ app.get('/app/flip/', (req, res) => {
     res.json(flipResult);
 });
 
-app.get('/app/flips/coins/', (req, res), next => {
+app.get('/app/flips/coin/', (req, res) => {
     res.status(200);
     const flips = req.body.number;
     const rawjson = {
