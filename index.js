@@ -8,30 +8,6 @@ const minimist = require('minimist')
 const app = express()
 const args = require('minimist')(process.argv.slice(2))
 
-if (args.log == 'false') {
-    console.log("NOTICE: not creating file access.log")
-} else {
-
-    //using morgan ot log fills
-    //look for .log file or create one if it doesn't exist
-    const logdir = './log/';
-
-    if (!fs.existsSync(logdir)) {
-        fs.mkdirSync(logdir);
-    }
-
-    const accessLog = fs.createWriteStream('access.log', { flags: 'a' })
-    app.use(morgan('combined', { stream: accessLog }))
-}
-
-app.use(express.urlencoded({extended: true}))
-
-const db = require('./src/services/database')
-
-//serve HTML files here!
-app.use(express.static('./public'))
-
-const port = args.port || 5000
 
 const help = (`
 server.js [options]
@@ -51,23 +27,36 @@ if (args.help || args.h) {
     process.exit(0)
 }
 
-app.use((req, res, next) => {
-    let logdata = {
-        remoteaddr: req.ip,
-        remoteuser: req.user,
-        time: Date.now(),
-        method: req.method,
-        url: req.url,
-        protocol: req.protocol,
-        httpversion: req.httpVersion,
-        status: res.statusCode,
-        referrer: req.headers['referer'],
-        useragent: req.headers['user-agent']
-    };
-    const stmt = db.prepare('INSERT INTO accesslog (remoteaddr, remoteuser, time, method, url, protocol, httpversion, status, referrer, useragent) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)')
-    const info = stmt.run(logdata.remoteaddr, logdata.remoteuser, logdata.time, logdata.method, logdata.url, logdata.protocol, logdata.httpversion, logdata.status, logdata.referrer, logdata.useragent)
-    next();
-})
+const port = args.port || 5000
+
+const server = app.listen(port, () => {
+    console.log('App listening on port %PORT%'.replace('%PORT%',port))
+});
+
+//serve HTML files here!
+app.use(express.static('./public'))
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+
+//logging middleware
+app.use(require('./src/middleware/mymiddleware.js'))
+
+if (args.log == 'false') {
+    console.log("NOTICE: not creating file access.log")
+} else {
+
+    //using morgan ot log fills
+    //look for .log file or create one if it doesn't exist
+    const logdir = './log/';
+
+    if (!fs.existsSync(logdir)) {
+        fs.mkdirSync(logdir);
+    }
+
+    const accessLog = fs.createWriteStream('./data/log/access.log', { flags: 'a' })
+    app.use(morgan('combined', { stream: accessLog }))
+}
 
 // -- OLD CODE --
 
@@ -187,10 +176,6 @@ app.use(function(req, res){
 });
 
 //-- SERVER STUFF --
-
-const server = app.listen(port, () => {
-    console.log('App listening on port %PORT%'.replace('%PORT%',port))
-});
 
 process.on('SIGINT', () => {
     server.close(() => {
