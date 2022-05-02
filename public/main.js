@@ -22,6 +22,7 @@ function singleFlip(){
 }
 
 // Flip multiple coins and show coin images in table as well as summary results
+// Enter number and press button to activate coin flip series
 
 function flipMultipleCoins() {
     numcoins = document.getElementById("multipleCoinFlipSubmit").value;
@@ -45,8 +46,6 @@ function flipMultipleCoins() {
             document.getElementById("summaryTails").innerHTML = result.summary.tails;
         })
 }
-
-// Enter number and press button to activate coin flip series
 
 // Guess a flip by clicking either heads or tails button
 
