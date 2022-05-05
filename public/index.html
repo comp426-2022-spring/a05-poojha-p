@@ -27,22 +27,60 @@
   </head>
   <body>
     <nav>
-      <button id="homenav">Home</button>
-      <button id="singlenav">Flip one coin</button>
-      <button id="multinav">Flip multiple coins</button>
-      <button id="guessnav">Guess the result</button>
+      <button id="homenav" onclick="homeNav()" class="active">Home</button>
+      <button id="singlenav" onclick="singleNav()">Flip one coin</button>
+      <button id="multinav" onclick="multiNav()">Flip multiple coins</button>
+      <button id="guessnav" onclick="guessNav()">Guess the result</button>
     </nav>
-    <div id="home">
-      
+    <div id="home" class="active">
+      <h1>Home - Heads or Tails Game</h1>
+        To play the game click one of the buttons above.
     </div>    
-    <div id="single" class="hidden">
-      
+    <div id="single" class="inactive">
+      <h1>Flip One Single Coin</h1>
+      <button id="coin"> Flip Coin </button>
+      <p><b>Result:</b> <span id="result"></span></p>
+      <!-- An image of a US quarter (North Carolina variant) -->
+      <img src="./assets/img/coin.png" id="singlecoin">
     </div>
     <div id="multi" class="hidden">
-      
+      <h1>Flip Multiple Coins</h1>
+      <!--got rid of some unnecessary html-->
+      <form id = "coins">
+        <!--multipleCoinFlipSubmit was og "number"-->
+        <label for="multipleCoinFlipSubmit">
+          <strong>
+            Enter the number of coins to flip:
+          </strong>
+        </label>
+        <input type="number" id="number" name="number" placeholder="Enter Amount of Flips" name="multipleCoinFlipSubmit" min="0">
+        <br>
+        <input type="submit" value="Flip!">
+      </form>
+      <h2>
+        <b>
+        Results
+      </b>
+    </h2>
+    <!--og "heads" in code-->
+      <p id="heads-result"></p>
+    <!--og "tails" in code-->
+      <p id="tails-result"></p>
+      <ul id="coinlist">
+        <li>
+          <img src="assets/img/coin.png" class="bigcoin">
+        </li>
+      </ul>
     </div>
     <div id="guess" class="hidden">
-      
+      <h1>Guess Coin Result</h1>
+      <button onclick="guessHeads()"> Guess Heads </button>
+      <button onclick="guessTails()"> Guess Tails </button>
+      <p><b>Calls:</b> <span id="call-result"></span></p>
+      <img src="./assets/img/coin.png" id="calls-coin">
+      <p><b>Flip:</b> <span id="flips-result"></span></p>
+      <img src="./assets/img/coin.png" id="flip-coin">
+      <p><b>Result:</b> <span id="guess-result"></span></p>
     </div>
 	<script src="main.js"></script>
   </body>
